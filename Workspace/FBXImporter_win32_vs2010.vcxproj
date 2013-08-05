@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\Source;..\..\Source;..\..\..\Source;..;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Source;..\..\Source;..\..\..\Source;..;$(VISION_SDK)\Source;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2014.1/include;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -105,19 +105,9 @@
       </ResourceOutputFileName>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <Lib>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>fbxsdk-2013.3-mdd.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\debug_dll;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/lib/vs2010/x86</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
-      <AdditionalOptions> /ignore:4221</AdditionalOptions>
-    </Lib>
     <Link>
-      <AdditionalDependencies>fbxsdk-2013.3-mdd.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\debug_dll;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/lib/vs2010/x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-md.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\debug_dll;$(VISION_SDK)\Lib\win32_vs2010_anarchy\debug_dll;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2014.1/lib/vs2010/x86/debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2010\x86\debug</AdditionalLibraryDirectories>
       <AdditionalOptions> /ignore:4221</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>
@@ -134,7 +124,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\Source;..\..\Source;..\..\..\Source;..;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Source;..\..\Source;..\..\..\Source;..;$(VISION_SDK)\Source;$(HAVOK_THIRDPARTY_DIR)\sdks\win32\FBX\2014.1\include;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include</AdditionalIncludeDirectories>
       <AdditionalOptions>
       </AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
@@ -184,19 +174,9 @@
       </ResourceOutputFileName>
       <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <Lib>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
-      <AdditionalDependencies>fbxsdk-2013.3-md.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\dev_dll;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/lib/vs2010/x86</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
-      <AdditionalOptions> /ignore:4221</AdditionalOptions>
-    </Lib>
     <Link>
-      <AdditionalDependencies>fbxsdk-2013.3-md.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\dev_dll;$(HAVOK_THIRDPARTY_DIR)/sdks/win32/FBX/2013.3/lib/vs2010/x86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk-md.lib;WinInet.lib;user32.lib;Advapi32.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\win32_vs2010_anarchy\dev_dll;$(VISION_SDK)\Lib\win32_vs2010_anarchy\dev_dll;$(HAVOK_THIRDPARTY_DIR)\sdks\win32\FBX\2014.1\lib\vs2010\x86\release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2010\x86\release</AdditionalLibraryDirectories>
       <AdditionalOptions> /ignore:4221</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>

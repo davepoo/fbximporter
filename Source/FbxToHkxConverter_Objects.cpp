@@ -200,10 +200,8 @@ void FbxToHkxConverter::addMesh(hkxScene *scene, FbxNode* meshNode, hkxNode* nod
 	if (!originalMesh->IsTriangleMesh())
 	{
 		 FbxGeometryConverter lGeometryConverter(m_options.m_fbxSdkManager);
-		 bool status;
-		 triMesh = lGeometryConverter.TriangulateMeshAdvance(originalMesh,status);
-
-		 HK_ASSERT(0,status);
+		 FbxNodeAttribute *triMeshAttribute = lGeometryConverter.Triangulate(meshNode->GetNodeAttribute(), false);
+		 triMesh = triMeshAttribute->GetNode()->GetMesh();
 	}
 	else
 	{
