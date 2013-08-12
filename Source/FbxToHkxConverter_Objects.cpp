@@ -44,8 +44,8 @@ void FbxToHkxConverter::addSpline(hkxScene *scene, FbxNode* splineNode, hkxNode*
 {
 	hkxSpline* newSpline = new hkxSpline;
 
-	FbxNurbsCurve* splineAttrib =(FbxNurbsCurve*)splineNode->GetNodeAttribute();
-	newSpline->m_isClosed =(splineAttrib->GetType()== FbxNurbsCurve::eClosed);
+	FbxNurbsCurve* splineAttrib = (FbxNurbsCurve*)splineNode->GetNodeAttribute();
+	newSpline->m_isClosed = (splineAttrib->GetType()== FbxNurbsCurve::eClosed);
 
 	// Try to get bezier curve data out of the function set
 	const int numControlPoints = splineAttrib->GetControlPointsCount();
@@ -56,6 +56,7 @@ void FbxToHkxConverter::addSpline(hkxScene *scene, FbxNode* splineNode, hkxNode*
 		// If spline is closed, get 'in' from last knot for first i==0
 		cvPtL = splineAttrib->GetControlPointAt((c==0 && newSpline->m_isClosed)? numControlPoints-1 : hkMath::max2(0, c-2));  
 		cvPtM = splineAttrib->GetControlPointAt(c-1);
+
 		// If spline is closed, get 'in' from last knot for first i==0
 		cvPtR = splineAttrib->GetControlPointAt((c==numControlPoints && newSpline->m_isClosed)? 0 : hkMath::min2(c, numControlPoints-1));  
 
@@ -77,7 +78,7 @@ void FbxToHkxConverter::addCamera(hkxScene *scene, FbxNode* cameraNode, hkxNode*
 {
 	hkxCamera* newCamera = new hkxCamera();
 
-	FbxCamera* cameraAttrib =(FbxCamera*)cameraNode->GetNodeAttribute();
+	FbxCamera* cameraAttrib = (FbxCamera*)cameraNode->GetNodeAttribute();
 	HK_ASSERT(0x0, cameraAttrib->GetAttributeType()== FbxNodeAttribute::eCamera);
 
 	FbxDouble3 pos = cameraAttrib->Position.Get();
@@ -88,9 +89,9 @@ void FbxToHkxConverter::addCamera(hkxScene *scene, FbxNode* cameraNode, hkxNode*
 	newCamera->m_focus.set((hkReal)focus[0],(hkReal)focus[1],(hkReal)focus[2]);
 
 	const hkReal degreesToRadians  = HK_REAL_PI / 180.0f;
-	newCamera->m_fov =(hkReal)cameraAttrib->FieldOfViewY.Get()* degreesToRadians;
-	newCamera->m_near =(hkReal)cameraAttrib->NearPlane.Get();
-	newCamera->m_far =(hkReal)cameraAttrib->FarPlane.Get();
+	newCamera->m_fov = (hkReal)cameraAttrib->FieldOfViewY.Get()* degreesToRadians;
+	newCamera->m_near = (hkReal)cameraAttrib->NearPlane.Get();
+	newCamera->m_far = (hkReal)cameraAttrib->FarPlane.Get();
 
 	newCamera->m_leftHanded = false;
 
@@ -103,7 +104,7 @@ void FbxToHkxConverter::addLight(hkxScene *scene, FbxNode* lightNode, hkxNode* n
 {
 	hkxLight* newLight = new hkxLight();
 
-	FbxLight* lightAttrib =(FbxLight*)lightNode->GetNodeAttribute();
+	FbxLight* lightAttrib = (FbxLight*)lightNode->GetNodeAttribute();
 	HK_ASSERT(0x0, lightAttrib->GetAttributeType()== FbxNodeAttribute::eLight);
 
 	const FbxAMatrix& lightTransform = lightNode->EvaluateLocalTransform();
@@ -117,8 +118,8 @@ void FbxToHkxConverter::addLight(hkxScene *scene, FbxNode* lightNode, hkxNode* n
 	const FbxDouble3 color = lightAttrib->Color.Get();
 	newLight->m_color = elementsToARGB(color[0], color[1], color[2], 1.0); 
 
-	newLight->m_intensity =(hkReal)lightAttrib->Intensity.Get();
-	newLight->m_decayRate =(hkInt16)lightAttrib->DecayType.Get();
+	newLight->m_intensity = (hkReal)lightAttrib->Intensity.Get();
+	newLight->m_decayRate = (hkInt16)lightAttrib->DecayType.Get();
 	newLight->m_shadowCaster = lightAttrib->CastShadows.Get();
 
 	switch (lightAttrib->LightType.Get())
@@ -146,14 +147,14 @@ void FbxToHkxConverter::addLight(hkxScene *scene, FbxNode* lightNode, hkxNode* n
 	case FbxLight::eDirectional:
 		{
 			newLight->m_type = hkxLight::DIRECTIONAL_LIGHT;
-			newLight->m_range =(hkReal)lightAttrib->FarAttenuationEnd.Get();
+			newLight->m_range = (hkReal)lightAttrib->FarAttenuationEnd.Get();
 			break;
 		}
 	case FbxLight::eSpot:
 		{
-			newLight->m_angle =(hkReal)lightAttrib->InnerAngle.Get();
+			newLight->m_angle = (hkReal)lightAttrib->InnerAngle.Get();
 			newLight->m_type = hkxLight::SPOT_LIGHT;
-			newLight->m_range =(hkReal)lightAttrib->FarAttenuationEnd.Get();
+			newLight->m_range = (hkReal)lightAttrib->FarAttenuationEnd.Get();
 			break;
 		}
 	default:
@@ -201,7 +202,7 @@ void FbxToHkxConverter::addMesh(hkxScene *scene, FbxNode* meshNode, hkxNode* nod
 	{
 		 FbxGeometryConverter lGeometryConverter(m_options.m_fbxSdkManager);
 		 FbxNodeAttribute *triMeshAttribute = lGeometryConverter.Triangulate(meshNode->GetNodeAttribute(), false);
-		 triMesh = triMeshAttribute->GetNode()->GetMesh();
+		 triMesh = (FbxMesh *)triMeshAttribute;
 	}
 	else
 	{
@@ -257,7 +258,7 @@ void FbxToHkxConverter::addMesh(hkxScene *scene, FbxNode* meshNode, hkxNode* nod
 						if (skinIndicesToClusters[i] < 0)
 						{
 							skinIndicesToClusters[i] = curClusterIndex;
-							skinControlPointWeights[i] =(float)lWeights[k];
+							skinControlPointWeights[i] = (float)lWeights[k];
 							break;
 						}
 					}
@@ -408,34 +409,33 @@ void FbxToHkxConverter::fillBuffers(
 		const hkxVertexDescription::ElementDecl* weightsDecl = vertDesc.getElementDecl(hkxVertexDescription::HKX_DU_BLENDWEIGHTS, 0);
 		const hkxVertexDescription::ElementDecl* indicesDecl = vertDesc.getElementDecl(hkxVertexDescription::HKX_DU_BLENDINDICES, 0);
 
-		const int posStride = posDecl? posDecl->m_byteStride : 0;
-		const int normStride = normDecl? normDecl->m_byteStride : 0;
-		const int colorStride = colorDecl? colorDecl->m_byteStride : 0;
-		const int weightsStride = weightsDecl? weightsDecl->m_byteStride : 0;
-		const int indicesStride = indicesDecl? indicesDecl->m_byteStride : 0;
+		const int posStride = posDecl ? posDecl->m_byteStride : 0;
+		const int normStride = normDecl ? normDecl->m_byteStride : 0;
+		const int colorStride = colorDecl ? colorDecl->m_byteStride : 0;
+		const int weightsStride = weightsDecl ? weightsDecl->m_byteStride : 0;
+		const int indicesStride = indicesDecl ? indicesDecl->m_byteStride : 0;
 
-		char* posBuf = static_cast<char*>(posDecl? newVB->getVertexDataPtr(*posDecl): HK_NULL);
-		char* normBuf = static_cast<char*>(normDecl? newVB->getVertexDataPtr(*normDecl): HK_NULL);
-		char* colorBuf = static_cast<char*>(colorDecl? newVB->getVertexDataPtr(*colorDecl): HK_NULL);
-		char* weightsBuf = static_cast<char*>(weightsDecl? newVB->getVertexDataPtr(*weightsDecl): HK_NULL);
-		char* indicesBuf = static_cast<char*>(indicesDecl? newVB->getVertexDataPtr(*indicesDecl): HK_NULL);
+		char* posBuf = static_cast<char*>(posDecl ? newVB->getVertexDataPtr(*posDecl): HK_NULL);
+		char* normBuf = static_cast<char*>(normDecl ? newVB->getVertexDataPtr(*normDecl): HK_NULL);
+		char* colorBuf = static_cast<char*>(colorDecl ? newVB->getVertexDataPtr(*colorDecl): HK_NULL);
+		char* weightsBuf = static_cast<char*>(weightsDecl ? newVB->getVertexDataPtr(*weightsDecl): HK_NULL);
+		char* indicesBuf = static_cast<char*>(indicesDecl ? newVB->getVertexDataPtr(*indicesDecl): HK_NULL);
 
-		const int maxNumUVs = (int) hkxMaterial::PROPERTY_MTL_UV_ID_STAGE_MAX - (int) hkxMaterial::PROPERTY_MTL_UV_ID_STAGE0;
+		const int maxNumUVs = (int)hkxMaterial::PROPERTY_MTL_UV_ID_STAGE_MAX - (int)hkxMaterial::PROPERTY_MTL_UV_ID_STAGE0;
 		hkArray<int>::Temp textureCoordinateArrayPositions(maxNumUVs);
 		textureCoordinateArrayPositions.setSize(maxNumUVs);
 		hkString::memSet4(textureCoordinateArrayPositions.begin(), 0, textureCoordinateArrayPositions.getSize());
 
 		FbxVector4* lControlPoints = pMesh->GetControlPoints(); 
 		int vertexId = 0;
-		for (int i = 0; i < lPolygonCount; i++)
+		for (int polygonIndex = 0; polygonIndex < lPolygonCount; polygonIndex++)
 		{
-			const int lPolygonSize = pMesh->GetPolygonSize(i);
+			const int lPolygonSize = pMesh->GetPolygonSize(polygonIndex);
 
-			HK_ASSERT(0x0,lPolygonSize==3);
-
-			for (int j = 0; j < lPolygonSize; j++)
+			HK_ASSERT2(0xa256d51, lPolygonSize==3, "Polygon does not have three vertices!");
+			for (int vertexIndex = 0; vertexIndex < lPolygonSize; vertexIndex++)
 			{
-				const int lControlPointIndex = pMesh->GetPolygonVertex(i, j);
+				const int lControlPointIndex = pMesh->GetPolygonVertex(polygonIndex, vertexIndex);
 				
 				if (posBuf)
 				{
@@ -456,7 +456,6 @@ void FbxToHkxConverter::fillBuffers(
 					FbxGeometryElementNormal* leNormal = pMesh->GetElementNormal(0);
 
 					const FbxGeometryElement::EMappingMode mappingMode = leNormal->GetMappingMode();
-
 					if (mappingMode == FbxGeometryElement::eByPolygonVertex)
 					{
 						switch(leNormal->GetReferenceMode())
@@ -494,7 +493,7 @@ void FbxToHkxConverter::fillBuffers(
 						}
 					}
 
-					float* _normal =(float*)(normBuf);
+					float* _normal = (float*)(normBuf);
 					_normal[0] = (float)fbxNormal[0];
 					_normal[1] = (float)fbxNormal[1];
 					_normal[2] = (float)fbxNormal[2];
@@ -505,8 +504,10 @@ void FbxToHkxConverter::fillBuffers(
 				FbxStringList lUVSetNameList;
 				pMesh->GetUVSetNames(lUVSetNameList);
 
-				// Tex coord UV channels
-				for(int t = 0, numUVs = hkMath::min2(lUVSetNameList.GetCount(), maxNumUVs); t < numUVs; ++t)
+				// Texture coord UV channels
+				for (int t = 0, numUVs = hkMath::min2(lUVSetNameList.GetCount(), maxNumUVs);
+					 t < numUVs;
+					 ++t)
 				{
 					const char* lUVSetName = lUVSetNameList.GetStringAt(t);
 					const FbxGeometryElementUV* leUV = pMesh->GetElementUV(lUVSetName);
@@ -520,7 +521,7 @@ void FbxToHkxConverter::fillBuffers(
  					switch (leUV->GetMappingMode())
  					{
 					case FbxGeometryElement::eByControlPoint:
- 						switch(leUV->GetReferenceMode())
+ 						switch (leUV->GetReferenceMode())
  						{
 						case FbxGeometryElement::eDirect:
  							fbxUV = leUV->GetDirectArray().GetAt(lControlPointIndex);
@@ -539,7 +540,7 @@ void FbxToHkxConverter::fillBuffers(
  
  					case FbxGeometryElement::eByPolygonVertex:
  						{
- 							int lTextureUVIndex = pMesh->GetTextureUVIndex(i, j);
+ 							int lTextureUVIndex = pMesh->GetTextureUVIndex(polygonIndex, vertexIndex);
  							switch(leUV->GetReferenceMode())
  							{
  							case FbxGeometryElement::eDirect:
@@ -561,7 +562,7 @@ void FbxToHkxConverter::fillBuffers(
  						break;
  					}
 
-					float* _uv =(float*)(texCoordBuf + textureCoordinateArrayPositions[t]);
+					float* _uv = (float*)(texCoordBuf + textureCoordinateArrayPositions[t]);
 					_uv[0] = (float)fbxUV[0];
 					_uv[1] = (float)fbxUV[1];
 					textureCoordinateArrayPositions[t] += texCoordStride;
@@ -641,7 +642,7 @@ void FbxToHkxConverter::fillBuffers(
 													unsigned int(skinIndicesToClusters[controlPointFour+2])<< 8  | 
 													unsigned int(skinIndicesToClusters[controlPointFour+3]);
 
-						hkUint32* curIndexBuf =(hkUint32*)(indicesBuf);
+						hkUint32* curIndexBuf = (hkUint32*)(indicesBuf);
 						*curIndexBuf = compressedI;
 					}
 					
@@ -664,7 +665,7 @@ void FbxToHkxConverter::fillBuffers(
 											unsigned int(tempQWeights[3]);
 						}
 
-						hkUint32* _w =(hkUint32*)(weightsBuf);
+						hkUint32* _w = (hkUint32*)(weightsBuf);
 						*_w = compressedW;
 					}					
 
@@ -682,14 +683,14 @@ void FbxToHkxConverter::fillBuffers(
 		newIB->m_indexType = hkxIndexBuffer::INDEX_TYPE_TRI_LIST;
 		newIB->m_vertexBaseOffset = 0;
 		newIB->m_length = pMesh->GetPolygonCount()* 3;
-		newIB->m_indices16.setSize(newIB->m_length);
+		newIB->m_indices32.setSize(newIB->m_length);
 
-		hkUint16* curIndex = newIB->m_indices16.begin();
+		hkUint32* curIndex = newIB->m_indices32.begin();
 		for(int i = 0, vertexId = 0; i < pMesh->GetPolygonCount(); i++)
 		{
 			for(int j = 0; j < 3; j++)
 			{
-				*curIndex =(hkUint16)vertexId++;
+				*curIndex = (hkUint32)vertexId++;
 				curIndex++;
 			}
 		}
