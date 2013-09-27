@@ -680,15 +680,15 @@ void FbxToHkxConverter::fillBuffers(
 	{
 		newIB->m_indexType = hkxIndexBuffer::INDEX_TYPE_TRI_LIST;
 		newIB->m_vertexBaseOffset = 0;
-		newIB->m_length = pMesh->GetPolygonCount()* 3;
-		newIB->m_indices16.setSize(newIB->m_length);
+		newIB->m_length = pMesh->GetPolygonCount() * 3;
+		newIB->m_indices32.setSize(newIB->m_length);
 
-		hkUint16* curIndex = newIB->m_indices16.begin();
-		for(int i = 0, vertexId = 0; i < pMesh->GetPolygonCount(); i++)
+		hkUint32* curIndex = newIB->m_indices32.begin();
+		for (int polygonIndex = 0, vertexId = 0; polygonIndex < pMesh->GetPolygonCount(); polygonIndex++)
 		{
-			for(int j = 0; j < 3; j++)
+			for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
 			{
-				*curIndex =(hkUint16)vertexId++;
+				*curIndex = vertexId++;
 				curIndex++;
 			}
 		}
