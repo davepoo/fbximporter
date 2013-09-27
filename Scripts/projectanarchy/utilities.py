@@ -53,7 +53,9 @@ def parse_text(source, label, parse_index=0):
         return False
 
     end = source.find("\n", index)
-    return source[index + len(label) + 1 : end]
+    result = source[index + len(label) + 1 : end]
+
+    return result.strip()
 
 def run(arguments, verbose=False, current_directory=""):
     if current_directory == "":

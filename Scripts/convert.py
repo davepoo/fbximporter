@@ -35,11 +35,11 @@ COMMAND_LINE_OPTIONS = (
       'dest': 'verbose',
       'default': True,
       'help': "Don't print out status updates"}),
-    (('-m', '--model'),
-     {'action': 'store_true',
-      'dest': 'outputVisionModel',
+    (('-k', '--keep',),
+     {'action': 'store_false',
+      'dest': 'keep',
       'default': False,
-      'help': 'Output a Vision Model file (does NOT include animations!)'}),
+      'help': "Keeps intermediate files around instead of deleting them"}),
     (('-s', '--static-mesh'),
      {'action': 'store_true',
       'dest': 'outputStaticMesh',
@@ -75,8 +75,8 @@ def main():
         success = projectanarchy.fbx.convert(
             fbx_file=fbx_file,
             static_mesh=options.outputStaticMesh,
-            vision_model=options.outputVisionModel,
             interactive=options.interactive,
+            keep_intermediate_files=options.keep,
             verbose=options.verbose)
 
     return success

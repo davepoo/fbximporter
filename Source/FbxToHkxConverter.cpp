@@ -276,7 +276,7 @@ void FbxToHkxConverter::addNodesRecursive(hkxScene *scene, FbxNode* fbxNode, hkx
 
 		hkxNode* newChildNode = new hkxNode();
 		{
-			newChildNode->m_name = fbxChildNode->GetName();			
+			newChildNode->m_name = fbxChildNode->GetName();
 			node->m_children.pushBack(newChildNode);
 		}
 
@@ -450,7 +450,7 @@ void FbxToHkxConverter::extractKeyFramesAndAnnotations(hkxScene *scene, FbxNode*
 						FbxAnimCurve* lAnimCurve = prop.GetCurve(lAnimLayer);
 
 						int currentKeyIndex;
-						const int keyIndex = (int) lAnimCurve->KeyFind(time, &currentKeyIndex);
+						const int keyIndex = (int)lAnimCurve->KeyFind(time, &currentKeyIndex);
 						const int priorKeyIndex = (int) lAnimCurve->KeyFind(priorSampleTime);
 
 						// Only store annotations on frames where they're explicitly keyframed, or if this is the first keyframe 
