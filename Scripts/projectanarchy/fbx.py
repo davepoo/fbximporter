@@ -40,7 +40,6 @@ class HavokScene():
         return
 
 def convert(fbx_file,
-            static_mesh=False,
             interactive=False,
             keep_intermediate_files=False,
             verbose=True):
@@ -116,7 +115,7 @@ def convert(fbx_file,
 
         havokScenes = []
         isRootNode = True
-        isAnimationExport = (animationStacks > 0) and (numBones > 0) and (not static_mesh)
+        isAnimationExport = (animationStacks > 0) and (numBones > 0)
         intermediate_files = []
 
         # Parse the output of the FBXImporter
@@ -159,24 +158,27 @@ def convert(fbx_file,
 
                 return havokScene
 
-            if isRootNode and isAnimationExport:
-                # output the Vision model file
+            if isRootNode:
+                # always output the Vision model file
                 configFile = os.path.join(configPath, "VisionModel.hko")
                 target_filename = "%s.model" % (rootName)
                 havokScenes.append(_createScene(configFile, input_file_path + '_vision', target_filename))
                 intermediate_files.append(input_file_path + '.anim')
+                
+                # output static mesh
+                if not isAnimationExport:
+                    configFile = os.path.join(configPath, "VisionStaticMesh.hko")
+                    target_filename = "%s.vmesh" % (rootName)
+                    havokScenes.append(_createScene(configFile, input_file_path, target_filename))
 
                 # output the rig file for Animation Studio
-                configFile = os.path.join(configPath, "AnimationRig.hko")
-                target_filename = "%s__out_rig.hkx" % (rootName)
-                havokScenes.append(_createScene(configFile, input_file_path + '_hat', target_filename))
+                if isAnimationExport:
+                    configFile = os.path.join(configPath, "AnimationRig.hko")
+                    target_filename = "%s__out_rig.hkx" % (rootName)
+                    havokScenes.append(_createScene(configFile, input_file_path + '_hat', target_filename))                
             elif isAnimationExport:
                 configFile = os.path.join(configPath, "Animation.hko")
                 target_filename = "%s__out_anim_%s.hkx" % (rootName, animName)
-                havokScenes.append(_createScene(configFile, input_file_path, target_filename))
-            else:
-                configFile = os.path.join(configPath, "VisionStaticMesh.hko")
-                target_filename = "%s.vmesh" % (rootName)
                 havokScenes.append(_createScene(configFile, input_file_path, target_filename))
 
             # We can break out of the loop early if this is just

@@ -39,12 +39,7 @@ COMMAND_LINE_OPTIONS = (
      {'action': 'store_false',
       'dest': 'keep',
       'default': False,
-      'help': "Keeps intermediate files around instead of deleting them"}),
-    (('-s', '--static-mesh'),
-     {'action': 'store_true',
-      'dest': 'outputStaticMesh',
-      'default': False,
-      'help': 'Forces it to output a static mesh and not a model with animation'}))
+      'help': "Keeps intermediate files around instead of deleting them"}))
 
 
 def main():
@@ -74,7 +69,6 @@ def main():
     else:
         success = projectanarchy.fbx.convert(
             fbx_file=fbx_file,
-            static_mesh=options.outputStaticMesh,
             interactive=options.interactive,
             keep_intermediate_files=options.keep,
             verbose=options.verbose)

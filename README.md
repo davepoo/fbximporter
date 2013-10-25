@@ -32,16 +32,18 @@ Options:
 - **-h, --help**: Show help message and exit
 - **-i, --interactive**: Use interactive mode which will bring up the standalone filter manager
 - **-q, --quiet**: Don't print out status updates
-- **-m, --model**: Output a Vision Model file (does NOT include animations!)
-- **-s, --static-mesh**: Forces it to output a static mesh and not a model with animation
+- **-k, --keep**: Keeps intermediate files around instead of deleting them
 
 ### Static Mesh (Vision)
 
 If you have an FBX file named **StaticBox.fbx** that has no animations, passing it to **convert.py** will generate the following files:
 
 - ```StaticBox.vmesh```
-- ```StaticBox.hkt```
-- ```StaticBox.hko``` - The configuration (filter set) that's passed to the filter tools.
+
+Intermediate files (must specifiy --keep command line option if you want them):
+
+- ```StaticBox.hkt``` (must specifiy --keep command line option)
+- ```StaticBox.hko``` - The configuration (filter set) that's passed to the filter tools. (must specifiy --keep command line option)
 
 Some packages, like Blender, will always export an animation stack which will make the converter think that it's an animation. To force it to output a static mesh, pass '-s' or '--static-mesh' as a parameter to the converter.
 
@@ -49,10 +51,14 @@ Some packages, like Blender, will always export an animation stack which will ma
 
 If you have an FBX file named **AnimatedBox.fbx** that has one animation named *Bounce*, passing this to **convert.py** will generate the following files:
 
-- ```AnimatedBox.hkt```
-- ```AnimatedBox.hko``` - Used to generate ```AnimatedBox__out_rig.hkx```.
+- ```AnimatedBox.model``` - Model file with bones so that it can be used in Vision
 - ```AnimatedBox__out_rig.hkx``` - Rig file used for Animation Studio. Put this in the **CharacterAssets** folder.
 - ```AnimatedBox__out_anim_Bounce.hkx``` - Contains animation data that is compressed and includes extracted motion. Put this in the **Animations** folder.
+
+Intermediate files (must specifiy --keep command line option if you want them):
+
+- ```AnimatedBox.hkt```
+- ```AnimatedBox.hko``` - Used to generate ```AnimatedBox__out_rig.hkx```.
 - ```AnimatedBox_Bounce.hkt```
 - ```AnimatedBox_Bounce.hko``` - Used to generate ```AnimatedBox__out_anim_Bounce.hkx```.
 
@@ -60,13 +66,16 @@ These files are to be used with Animation Studio.
 
 ### Model (Vision)
 
-If you have an FBX file named **StaticBox.fbx**, passing it to **convert.py** along with the '-m' or '--model' command line parameter will generate the following files:
+If you have an FBX file named **StaticBox.fbx**, passing it to **convert.py** will generate the following files:
 
 - ```StaticBox.model```
+
+Intermediate files (must specifiy --keep command line option if you want them):
+
 - ```StaticBox.hkt```
 - ```StaticBox.hko``` - The configuration (filter set) that's passed to the filter tools.
 
-**NOTE: Generated Vision model files do not yet support animations**
+**NOTE: Generated Vision model files do not yet support generating .anim files, but you can still get animated models into Vision using Animation Studio**
 
 Dependencies
 ------------
