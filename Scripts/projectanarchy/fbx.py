@@ -29,13 +29,14 @@ class HavokScene():
     a scene file that could describe an animation or mesh
     """
     def __init__(self, sceneFile, filter_set_file, asset_path,
-                 output_path, scene_length, is_root):
+                 output_path, scene_length, is_root, target_file):
         self.sceneFile = sceneFile
         self.filter_set_file = filter_set_file
         self.asset_path = asset_path
         self.output_path = output_path
         self.scene_length = scene_length
         self.is_root = is_root
+        self.target_file = target_file
 
         return
 
@@ -152,7 +153,8 @@ def convert(fbx_file,
                                         asset_path=inputDirectory,
                                         output_path=inputDirectory,
                                         scene_length=sceneLength,
-                                        is_root=isRootNode)
+                                        is_root=isRootNode,
+                                        target_file=targetFilename)
                 
                 intermediate_files.append(outputConfigFile)
 
@@ -204,6 +206,7 @@ def convert(fbx_file,
         for havokScene in havokScenes:
             log("Tag file: %s" % os.path.basename(havokScene.sceneFile))
             log("Filter set: %s" % os.path.basename(havokScene.filter_set_file))
+            log("Output: %s" % os.path.basename(havokScene.target_file))
             log(utilities.line(True))
 
             havokContentTools.run(havokScene.sceneFile,

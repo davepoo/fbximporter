@@ -36,7 +36,7 @@ COMMAND_LINE_OPTIONS = (
       'default': True,
       'help': "Don't print out status updates"}),
     (('-k', '--keep',),
-     {'action': 'store_false',
+     {'action': 'store_true',
       'dest': 'keep',
       'default': False,
       'help': "Keeps intermediate files around instead of deleting them"}))
