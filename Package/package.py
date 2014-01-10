@@ -44,7 +44,7 @@ PREVIEW_EXE_PATH = "../../Bin/Tools/%s" % (PREVIEW_EXECUTABLE)
 PY2EXE_PATHS = {"Scripts/convert.py": CONVERT_EXE_PATH,
                 "Scripts/preview.py": PREVIEW_EXE_PATH}
 
-IGNORE_LIST = ["__pycache__", ".pyc", ".spyderproject", ".suo", ".user", ".sdf"]
+IGNORE_LIST = ["__pycache__", ".pyc", ".spyderproject", ".suo", ".user", ".sdf", ".ipch"]
 
 # (src, dest) pairs for packaging
 # src is relative to package root, dest is the path in the zip to place the file at.

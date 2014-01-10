@@ -94,7 +94,7 @@ Compiling
 2. Install [FBX SDK 2014.1 VS 2010][4]
 2. Git clone the repository into **$(AnarchySDK)\\Tools\\FBXImporter**. From **$(AnarchySDK)\\Tools** on the command line execute the following:
     * ```git clone https://github.com/projectanarchy/fbximporter.git FBXImporter```
-3. Open **$(AnarchySDK)\\Tools\\FBXImporter\\Workspace\\FBXImporter.sln**
+3. Open **$(AnarchySDK)\\Tools\\FBXImporter\\Workspace\\FBXImporter_C++.sln**
     * Build the project using **Dev DLL** Configuration. This will output an executable to: **$(AnarchySDK)\\Tools\\FBXImporter\\Bin\\FBXImporter.exe**
 
 Packaging

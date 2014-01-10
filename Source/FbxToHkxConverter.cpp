@@ -222,7 +222,7 @@ bool FbxToHkxConverter::createSceneStack(int animStackIndex)
 		if (currentAnimStackIndex != -1)
 		{
 			lAnimStack = m_curFbxScene->GetSrcObject<FbxAnimStack>(currentAnimStackIndex);
-			m_curFbxScene->GetEvaluator()->SetContext(lAnimStack);
+			m_curFbxScene->SetCurrentAnimationStack(lAnimStack);
 		}
 
 		if (rigPass)
