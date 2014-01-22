@@ -6,7 +6,7 @@
 	</hkobject>
 	<hkobject class="hctConfigurationData">
 		<hkparam name="configurationName">Default</hkparam>
-		<hkparam name="numFilters">6</hkparam>
+		<hkparam name="numFilters">5</hkparam>
 	</hkobject>
 	<hkobject name="Transform Scene" class="hctFilterData">
 		<hkparam name="id">2860016997</hkparam>
@@ -89,13 +89,5 @@
 		<hkparam name="exportFilename">$(output)</hkparam>
 		<hkparam name="selectionSets"></hkparam>
 		<hkparam name="selectionDeletionMode">HK_SELECTION_DELETE_NOT_SELECTED</hkparam>
-	</hkobject>
-	<hkobject name="Preview Tool" class="hctFilterData">
-		<hkparam name="id">1879060683</hkparam>
-		<hkparam name="ver">65795</hkparam>
-		<hkparam name="hasOptions">true</hkparam>
-	</hkobject>
-	<hkobject name="Preview Tool" class="hctFilterToolStubImplOptions">
-		<hkparam name="renderer"></hkparam>
 	</hkobject>
 </hkoptions>

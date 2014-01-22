@@ -6,7 +6,7 @@
 	</hkobject>
 	<hkobject class="hctConfigurationData">
 		<hkparam name="configurationName">Default</hkparam>
-		<hkparam name="numFilters">3</hkparam>
+		<hkparam name="numFilters">2</hkparam>
 	</hkobject>
 	<hkobject name="Transform Scene" class="hctFilterData">
 		<hkparam name="id">2860016997</hkparam>
@@ -32,17 +32,9 @@
 		<hkparam name="havokFromVisionTransform">(1.000000 0.000000 0.000000)(0.000000 1.000000 0.000000)(0.000000 0.000000 1.000000)</hkparam>
 		<hkparam name="embedMeshes">false</hkparam>
 		<hkparam name="embedMeshesForDestruction">false</hkparam>
-		<hkparam name="visionExportOptions">&#9216;</hkparam>
+		<hkparam name="visionExportOptions">harvestingOptions {&#10;  grabBones 1&#10;  grabLights 1&#10;  grabBezierCurves 1&#10;  grabMaterials 1&#10;  grabColors 1&#10;  grabNormals 1&#10;  grabTangents 1&#10;  grabUVs 1&#10;  uvChannel_diffuse &quot;1&quot;&#10;  uvChannel_lightmap &quot;AUTO&quot;&#10;  animations {&#10;  }&#10;}&#10;optimizations {&#10;  removeUnskinnedLeafBones 0&#10;}&#10;miscellaneous {&#10;  colMeshType 2&#10;  replaceSpacesInBoneNames 0&#10;  trajectoryBoneName &quot;Bone001&quot;&#10;  pivotNodeName &quot;&lt;scene&gt;&quot;&#10;  pivotAffects 0&#10;  scaleMesh 1.0000&#10;  exportMaterialAlongWithMeshOrModel 1&#10;  exportAnimAlongWithModel 1&#10;  exportHiddenNodes 1&#10;  exportColmeshAlongWithMesh 1&#10;}&#10;visibility {&#10;  maxSubmeshSize 0.0000&#10;  computeVisibility 0&#10;  writeVisibilityDebugInfo 0&#10;}&#10;postExportOptions {&#10;  extractAndCopyTextures 1&#10;  projRelativeTexturePath 1&#10;  textureSubdir &quot;Textures\&quot;&#10;  displayViewer 1&#10;}&#10;</hkparam>
 		<hkparam name="exportFilename">$(output)</hkparam>
 		<hkparam name="selectionSets"></hkparam>
 		<hkparam name="selectionDeletionMode">HK_SELECTION_DELETE_NOT_SELECTED</hkparam>
-	</hkobject>
-	<hkobject name="Preview Tool" class="hctFilterData">
-		<hkparam name="id">1879060683</hkparam>
-		<hkparam name="ver">65795</hkparam>
-		<hkparam name="hasOptions">true</hkparam>
-	</hkobject>
-	<hkobject name="Preview Tool" class="hctFilterToolStubImplOptions">
-		<hkparam name="renderer"></hkparam>
 	</hkobject>
 </hkoptions>

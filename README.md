@@ -31,6 +31,8 @@ Options:
 
 - **-h, --help**: Show help message and exit
 - **-i, --interactive**: Use interactive mode which will bring up the standalone filter manager
+- **-a, --anim**: Export model files along with animation files used just for Vision and not for Havok Animation Studio. One model will be exported for each take.
+- **-o, --overwrite**: Overwrite any configuration files or output files that may already exist on disk.
 - **-q, --quiet**: Don't print out status updates
 - **-k, --keep**: Keeps intermediate files around instead of deleting them
 
@@ -45,7 +47,7 @@ Intermediate files (must specifiy --keep command line option if you want them):
 - ```StaticBox.hkt``` (must specifiy --keep command line option)
 - ```StaticBox.hko``` - The configuration (filter set) that's passed to the filter tools. (must specifiy --keep command line option)
 
-Some packages, like Blender, will always export an animation stack which will make the converter think that it's an animation. To force it to output a static mesh, pass '-s' or '--static-mesh' as a parameter to the converter.
+Some packages, like Blender, will always export an animation stack which will make the converter think that it's an animation.
 
 ### Animation Studio
 
@@ -74,8 +76,6 @@ Intermediate files (must specifiy --keep command line option if you want them):
 
 - ```StaticBox.hkt```
 - ```StaticBox.hko``` - The configuration (filter set) that's passed to the filter tools.
-
-**NOTE: Generated Vision model files do not yet support generating .anim files, but you can still get animated models into Vision using Animation Studio**
 
 Dependencies
 ------------

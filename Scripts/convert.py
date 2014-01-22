@@ -35,6 +35,16 @@ COMMAND_LINE_OPTIONS = (
       'dest': 'verbose',
       'default': True,
       'help': "Don't print out status updates"}),
+    (('-a', '--anim',),
+     {'action': 'store_true',
+      'dest': 'anim',
+      'default': False,
+      'help': "Bring up interactive mode for the animated files"}),
+    (('-o', '--overwrite',),
+     {'action': 'store_true',
+      'dest': 'overwrite',
+      'default': False,
+      'help': "Overwrite any existing output files"}),
     (('-k', '--keep',),
      {'action': 'store_true',
       'dest': 'keep',
@@ -67,14 +77,9 @@ def main():
     if not fbx_file:
         print("Missing FBX input filename!")
     else:
-        success = projectanarchy.fbx.convert(
-            fbx_file=fbx_file,
-            interactive=options.interactive,
-            keep_intermediate_files=options.keep,
-            verbose=options.verbose)
+        success = projectanarchy.fbx.convert(fbx_file, options)
 
     return success
 
 if __name__ == "__main__":
     SUCCESS = main()
-    sys.exit(0 if SUCCESS else 1)

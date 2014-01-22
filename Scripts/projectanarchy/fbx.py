@@ -40,10 +40,7 @@ class HavokScene():
 
         return
 
-def convert(fbx_file,
-            interactive=False,
-            keep_intermediate_files=False,
-            verbose=True):
+def convert(fbx_file, options):
     """
     Takes as input an FBX file and converts it to files that can be
     used by either Vision or Animation Studio.
@@ -59,8 +56,8 @@ def convert(fbx_file,
     labelBones = "Bones:"
 
     def log(message):
-        """ Only print a message if we're in verbose mode """
-        if verbose:
+        """ Only print a message if we're in options.verbose mode """
+        if options.verbose:
             print(message)
 
     try:
@@ -97,7 +94,7 @@ def convert(fbx_file,
         inputDirectory = os.path.dirname(inputFile)
 
         log("Converting FBX to Havok Scene Format...")
-        fbxImporterOutput = utilities.run([fbxImporter, inputFile], verbose)
+        fbxImporterOutput = utilities.run([fbxImporter, inputFile], options.verbose)
 
         parseIndex = fbxImporterOutput.find(labelTagFile)
         if parseIndex == -1:
@@ -143,10 +140,19 @@ def convert(fbx_file,
                     currentDirectory,
                     configFile))
                 outputConfigFile = os.path.abspath(outputConfigFile + ".hko")
+                
+                updateConfigFile = False
 
-                with open(outputConfigFile, 'wt') as out:
-                    for line in open(configFile):
-                        out.write(line.replace('$(output)', targetFilename))
+                try:
+                    with open(outputConfigFile):
+                        updateConfigFile = options.overwrite
+                except IOError:
+                    updateConfigFile = True
+
+                if updateConfigFile:
+                    with open(outputConfigFile, 'wt') as out:
+                        for line in open(configFile):
+                            out.write(line.replace('$(output)', targetFilename))
 
                 havokScene = HavokScene(sceneFile=sceneFile,
                                         filter_set_file=outputConfigFile,
@@ -155,12 +161,12 @@ def convert(fbx_file,
                                         scene_length=sceneLength,
                                         is_root=isRootNode,
                                         target_file=targetFilename)
-                
+
                 intermediate_files.append(outputConfigFile)
 
                 return havokScene
 
-            if isRootNode:
+            if isRootNode and (not options.anim):
                 # always output the Vision model file
                 configFile = os.path.join(configPath, "VisionModel.hko")
                 target_filename = "%s.model" % (rootName)
@@ -178,10 +184,15 @@ def convert(fbx_file,
                     configFile = os.path.join(configPath, "AnimationRig.hko")
                     target_filename = "%s__out_rig.hkx" % (rootName)
                     havokScenes.append(_createScene(configFile, input_file_path + '_hat', target_filename))                
-            elif isAnimationExport:
-                configFile = os.path.join(configPath, "Animation.hko")
-                target_filename = "%s__out_anim_%s.hkx" % (rootName, animName)
-                havokScenes.append(_createScene(configFile, input_file_path, target_filename))
+            elif (not isRootNode) and isAnimationExport:
+                if options.anim:
+                    configFile = os.path.join(configPath, "VisionModel.hko")
+                    target_filename = "%s__out_anim_%s.model" % (rootName, animName)
+                    havokScenes.append(_createScene(configFile, input_file_path, target_filename))
+                else:
+                    configFile = os.path.join(configPath, "Animation.hko")
+                    target_filename = "%s__out_anim_%s.hkx" % (rootName, animName)
+                    havokScenes.append(_createScene(configFile, input_file_path, target_filename))
 
             # We can break out of the loop early if this is just
             # a static mesh export
@@ -209,6 +220,12 @@ def convert(fbx_file,
             log("Output: %s" % os.path.basename(havokScene.target_file))
             log(utilities.line(True))
 
+            interactive = False
+            if options.anim:
+                interactive = (".model" in havokScene.target_file) and (not havokScene.is_root)
+            else:
+                interactive = options.interactive
+
             havokContentTools.run(havokScene.sceneFile,
                                     havokScene.filter_set_file,
                                     havokScene.asset_path,
@@ -216,7 +233,7 @@ def convert(fbx_file,
                                     interactive)
         
         # Remove intermediate files if we didn't set the flag to keep them
-        if not keep_intermediate_files:
+        if not options.keep:
             for file in intermediate_files:
                 if os.path.exists(file):
                     os.remove(file)
