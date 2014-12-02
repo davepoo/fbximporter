@@ -18,6 +18,7 @@ of that with Havok Content Tools filter manager. Given an FBX file it will:
 import sys
 import os
 import traceback
+import re
 
 import utilities
 from hct import HCT
@@ -219,9 +220,10 @@ def convert(fbx_file, options):
 
         # Now go through each scene and run the standalone filter manager on each one
         for havokScene in havokScenes:
+            outputfilename = os.path.basename(havokScene.target_file)
             log("Tag file: %s" % os.path.basename(havokScene.sceneFile))
             log("Filter set: %s" % os.path.basename(havokScene.filter_set_file))
-            log("Output: %s" % os.path.basename(havokScene.target_file))
+            log("Output: %s" % outputfilename)
             log(utilities.line(True))
 
             interactive = False
@@ -229,6 +231,13 @@ def convert(fbx_file, options):
                 interactive = (".model" in havokScene.target_file) and (not havokScene.is_root)
             else:
                 interactive = options.interactive
+                if interactive == False and options.semiinteractive != '.':
+                  # semi-interactive mode, enable interactive mode when regex pattern matches output filename
+                  regex = re.compile( options.semiinteractive )
+                  match = regex.search( outputfilename )
+                  if match:
+                    interactive = True
+                  
 
             havokContentTools.run(havokScene.sceneFile,
                                     havokScene.filter_set_file,

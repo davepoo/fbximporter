@@ -30,12 +30,29 @@ Extract the package (e.g. **ProjectAnarchy_FBXImporter_20130730.zip**) to the ro
 Options:
 
 - **-h, --help**: Show help message and exit
-- **-i, --interactive**: Use interactive mode which will bring up the standalone filter manager
+- **-i, --interactive**: Use interactive mode which will bring up the standalone filter manager for all output files
+- **-s, --semi-interactive**: Bring up the standalone filter manager only when the output filename matches a regular expression (see example below).
 - **-a, --anim**: Export model files along with animation files used just for Vision and not for Havok Animation Studio. One model will be exported for each take.
 - **-o, --overwrite**: Overwrite any configuration files or output files that may already exist on disk.
 - **-q, --quiet**: Don't print out status updates
 - **-k, --keep**: Keeps all intermediate files around instead of deleting them
-- **-c, --keepfilterset**: Keeps intermediate configuration filter set files around instead of deleting them 
+- **-c, --keepfilterset**: Keeps intermediate configuration filter set files around instead of deleting them
+ 
+#### Example: -s, --semi-interactive
+
+1. Bring up the standalone filter manager only when the "walk" animation file is being processed:
+
+`Bin\Tools\FBXConverter.exe** -s walk model.fbx`
+
+This will bring up the filter manager when the `model__out_anim_walk.hkx` output file is being processed.
+
+2. Bring up the standalone filter manager only when any animation file is being processed:
+
+`Bin\Tools\FBXConverter.exe** -s anim model.fbx`
+
+This will bring up the filter manager when the `model__out_anim_walk.hkx` and `model__out_anim_idle.hkx` output file is being processed.
+
+You can use any valid [python regular expression](https://docs.python.org/2/library/re.html "Python regular expression") to match against the filenames of the output files being processed.
 
 ### Static Mesh (Vision)
 

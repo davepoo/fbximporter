@@ -14,6 +14,7 @@ convert.py - The main script of Havok FBX conversion suite.
 """
 
 import sys
+import re
 
 from optparse import OptionParser
 
@@ -30,6 +31,11 @@ COMMAND_LINE_OPTIONS = (
       'dest': 'interactive',
       'default': False,
       'help': "Use interactive mode which will bring up the standalone filter manager"}),
+    (('-s', '--semi-interactive',),
+     {'action': 'store',
+      'dest': 'semiinteractive',
+      'default': '.',
+      'help': "Bring up the standalone filter manager only when the output filename matches a regular expression"}),      
     (('-q', '--quiet',),
      {'action': 'store_false',
       'dest': 'verbose',
@@ -72,6 +78,13 @@ def main():
         projectanarchy.utilities.print_line()
         print("Havok FBX Importer")
         projectanarchy.utilities.print_line()
+        
+    # fail fast, check the --semi-interactive regex is valid
+    if options.semiinteractive != '.':
+      try:
+        re.compile( options.semiinteractive )
+      except:
+        raise ValueError("Error: The semi-interactive regular expression '" + options.semiinteractive + "' is not valid")
 
     fbx_file = options.filename
     if not fbx_file and len(sys.argv) > 1:
