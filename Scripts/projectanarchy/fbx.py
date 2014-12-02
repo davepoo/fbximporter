@@ -161,8 +161,12 @@ def convert(fbx_file, options):
                                         scene_length=sceneLength,
                                         is_root=isRootNode,
                                         target_file=targetFilename)
-
-                intermediate_files.append(outputConfigFile)
+                
+                
+                # Keep config file if command line told us not to delete it or if it didn't exist already, 
+                # otherwise it is consindered intermediate and gets removed
+                if updateConfigFile and options.keepconfig == False:
+                    intermediate_files.append(outputConfigFile)
 
                 return havokScene
 

@@ -49,7 +49,12 @@ COMMAND_LINE_OPTIONS = (
      {'action': 'store_true',
       'dest': 'keep',
       'default': False,
-      'help': "Keeps intermediate files around instead of deleting them"}))
+      'help': "Keeps all intermediate files around instead of deleting them"}),
+    (('-c', '--keepfilterset',),
+     {'action': 'store_true',
+      'dest': 'keepconfig',
+      'default': False,
+      'help': "Keeps intermediate configuration filter set files around instead of deleting them"}))
 
 
 def main():

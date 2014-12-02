@@ -34,7 +34,8 @@ Options:
 - **-a, --anim**: Export model files along with animation files used just for Vision and not for Havok Animation Studio. One model will be exported for each take.
 - **-o, --overwrite**: Overwrite any configuration files or output files that may already exist on disk.
 - **-q, --quiet**: Don't print out status updates
-- **-k, --keep**: Keeps intermediate files around instead of deleting them
+- **-k, --keep**: Keeps all intermediate files around instead of deleting them
+- **-c, --keepfilterset**: Keeps intermediate configuration filter set files around instead of deleting them 
 
 ### Static Mesh (Vision)
 
@@ -57,12 +58,20 @@ If you have an FBX file named **AnimatedBox.fbx** that has one animation named *
 - ```AnimatedBox__out_rig.hkx``` - Rig file used for Animation Studio. Put this in the **CharacterAssets** folder.
 - ```AnimatedBox__out_anim_Bounce.hkx``` - Contains animation data that is compressed and includes extracted motion. Put this in the **Animations** folder.
 
-Intermediate files (must specifiy --keep command line option if you want them):
+Intermediate files (.hkt/.hko -specifiy **--keep** command line option if you want them):
 
 - ```AnimatedBox.hkt```
-- ```AnimatedBox.hko``` - Used to generate ```AnimatedBox__out_rig.hkx```.
+- ```AnimatedBox.hko``` - Filter set used to generate ```AnimatedBox__out_rig.hkx```.
 - ```AnimatedBox_Bounce.hkt```
-- ```AnimatedBox_Bounce.hko``` - Used to generate ```AnimatedBox__out_anim_Bounce.hkx```.
+- ```AnimatedBox_Bounce.hko``` - Filter set used to generate ```AnimatedBox__out_anim_Bounce.hkx```.
+
+Intermediate filter set files (.hko -specifiy **--keepfilterset** command line option if you want them):
+
+- ```AnimatedBox.hko``` - Filter set used to generate ```AnimatedBox__out_rig.hkx```.
+
+If a filter set file does not exist when you run the tool then one will be created from one of the templates included.
+If you want to keep these filter sets for later tuning of the output then specify **--keepfilterset** on the command line.
+If you do not specify the  **--keepfilterset** parameter then the tool will still only clean up .hko files if they were created during the current run, Any previously existing .hko files will be left alone.
 
 These files are to be used with Animation Studio.
 
