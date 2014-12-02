@@ -40,19 +40,19 @@ Options:
  
 #### Example: -s, --semi-interactive
 
-1. Bring up the standalone filter manager only when the "walk" animation file is being processed:
+**Example 1:** Bring up the standalone filter manager only when the "walk" animation file is being processed:
 
 `Bin\Tools\FBXConverter.exe** -s walk model.fbx`
 
 This will bring up the filter manager when the `model__out_anim_walk.hkx` output file is being processed.
 
-2. Bring up the standalone filter manager only when any animation file is being processed:
+**Example 2:** Bring up the standalone filter manager only when any animation file is being processed:
 
 `Bin\Tools\FBXConverter.exe** -s anim model.fbx`
 
 This will bring up the filter manager when the `model__out_anim_walk.hkx` and `model__out_anim_idle.hkx` output file is being processed.
 
-You can use any valid [python regular expression](https://docs.python.org/2/library/re.html "Python regular expression") to match against the filenames of the output files being processed.
+Note: You can use any valid [Python regular expression](https://docs.python.org/2/library/re.html "Python regular expression") to match against the filenames of the output files being processed.
 
 ### Static Mesh (Vision)
 
